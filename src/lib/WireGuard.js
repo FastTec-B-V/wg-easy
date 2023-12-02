@@ -219,8 +219,8 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     });
   }
 
-  async createClient({ name }) {
-    if (!name) {
+  async createClient({ clientId }) {
+    if (!clientId) {
       throw new Error('Missing: Name');
     }
 
@@ -248,9 +248,9 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     }
 
     // Create Client
-    const clientId = uuid.v4();
+    const name = uuid.v4();
     const client = {
-      name,
+      clientId,
       address,
       privateKey,
       publicKey,
@@ -262,7 +262,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
       enabled: true,
     };
 
-    config.clients[clientId] = client;
+    config.clients[name] = client;
 
     await this.saveConfig();
 
