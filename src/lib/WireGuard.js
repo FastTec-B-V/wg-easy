@@ -182,11 +182,11 @@ AllowedIPs = ${client.address}/32`;
     return clients;
   }
 
-  async getClient({ clientId }) {
+  async getClient({ name }) {
     const config = await this.getConfig();
-    const client = config.clients[clientId];
+    const client = config.clients[name];
     if (!client) {
-      throw new ServerError(`Client Not Found: ${clientId}`, 404);
+      throw new ServerError(`Client Not Found: ${name}`, 404);
     }
 
     return client;
@@ -251,6 +251,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     const name = uuid.v4();
     const client = {
       clientId,
+      name,
       address,
       privateKey,
       publicKey,
