@@ -219,14 +219,11 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     });
   }
 
-  async createClient({ name, clientId }) {
-
+  async createClient({ name }) {
     if (!name) {
       throw new Error('Missing: Name');
     }
-    if (!clientId) {
-      throw new Error('Missing: clientId');
-    }
+
     const config = await this.getConfig();
 
     const privateKey = await Util.exec('wg genkey');
@@ -251,22 +248,23 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     }
 
     // Create Client
+    const clientId = uuid.v4();
     const client = {
-      clientId,
       name,
       address,
       privateKey,
       publicKey,
       preSharedKey,
+
       createdAt: new Date(),
       updatedAt: new Date(),
+
       enabled: true,
     };
-    if (config.clients[clientId]) {
-      delete config.clients[clientId];
-      await this.saveConfig();
-    }
 
+    config.clients[clientId] = client;
+
+    await this.saveConfig();
 
     return client;
   }
