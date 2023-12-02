@@ -219,7 +219,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     });
   }
 
-  async createClient({ clientId }) {
+  async createClient({ name, clientId }) {
     if (!clientId) {
       throw new Error('Missing: Name');
     }
