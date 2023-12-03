@@ -132,7 +132,7 @@ module.exports = class Server {
       .put('/api/wireguard/client/:clientId/dns', Util.promisify(async (req) => {
         const { clientId } = req.params;
         const { dns } = req.body;
-        return WireGuard.updateClientAddress({ clientId, dns });
+        return WireGuard.updateClientDns({ clientId, dns });
       }))
       .listen(PORT, WEBUI_HOST, () => {
         debug(`Listening on http://${WEBUI_HOST}:${PORT}`);
