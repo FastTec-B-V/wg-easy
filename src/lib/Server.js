@@ -100,8 +100,7 @@ module.exports = class Server {
         const { clientId } = req.params;
         const config = await WireGuard.getClientConfiguration({ clientId });
         const configName = clientId
-        res.header('Content-Disposition', `attachment; filename="${configName}.conf"`);
-        res.header('Content-Type', 'text/plain');
+        res.header('Content-Type', 'application/json');
         res.send(config);
       }))
       .post('/api/wireguard/client/', Util.promisify(async (req) => {
@@ -130,7 +129,11 @@ module.exports = class Server {
         const { address } = req.body;
         return WireGuard.updateClientAddress({ clientId, address });
       }))
-
+      .put('/api/wireguard/client/:clientId/dns', Util.promisify(async (req) => {
+        const { clientId } = req.params;
+        const { dns } = req.body;
+        return WireGuard.updateClientDns({ clientId, dns });
+      }))
       .listen(PORT, WEBUI_HOST, () => {
         debug(`Listening on http://${WEBUI_HOST}:${PORT}`);
       });

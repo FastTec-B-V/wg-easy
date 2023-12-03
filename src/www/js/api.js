@@ -117,4 +117,12 @@ class API {
     });
   }
 
+  async updateClientDns({ clientId, dns }) {
+    return this.call({
+      method: 'put',
+      path: `/wireguard/client/${clientId}/dns/`,
+      body: { dns },
+    });
+  }
+
 }

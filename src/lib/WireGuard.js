@@ -199,8 +199,8 @@ AllowedIPs = ${client.address}/32`;
     return `
 [Interface]
 PrivateKey = ${client.privateKey}
-Address = ${client.address}/24
-${WG_DEFAULT_DNS ? `DNS = ${WG_DEFAULT_DNS}` : ''}
+Address = ${client.address}/32
+${WG_DEFAULT_DNS ? `DNS = ${WG_DEFAULT_DNS}` : `DNS = ${client.dns}`}
 ${WG_MTU ? `MTU = ${WG_MTU}` : ''}
 
 [Peer]
@@ -313,6 +313,19 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     }
 
     client.address = address;
+    client.updatedAt = new Date();
+
+    await this.saveConfig();
+  }
+
+  async updateClientDns({ clientId, dns }) {
+    const client = await this.getClient({ clientId });
+
+    if (!Util.isValidDNS(dns)) {
+      throw new ServerError(`Invalid dns: ${dns}`, 400);
+    }
+
+    client.dns = dns;
     client.updatedAt = new Date();
 
     await this.saveConfig();
