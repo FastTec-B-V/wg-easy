@@ -27,7 +27,7 @@ services:
       - etc_wireguard:/etc/wireguard
     ports:
       - "51820:51820/udp"
-      - "8880:8880/tcp"
+      - "8080:8080/tcp"
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
