@@ -7,7 +7,7 @@ services:
     environment:
       # ⚠️ Required:
       # Change this to your host's public address
-      - WG_HOST=23.88.96.142
+      - WG_HOST=
 
       # Optional:
       # - PASSWORD=foobar123
