@@ -116,7 +116,6 @@ class API {
       body: { address },
     });
   }
-
   async updateClientDns({ clientId, dns }) {
     return this.call({
       method: 'put',
@@ -124,5 +123,4 @@ class API {
       body: { dns },
     });
   }
-
 }

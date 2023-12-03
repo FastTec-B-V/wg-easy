@@ -40,8 +40,6 @@ new Vue({
     clientEditNameId: null,
     clientEditAddress: null,
     clientEditAddressId: null,
-    clientEditDns: null,
-    clientEditDnsId: null,
     qrcode: null,
 
     currentRelease: null,
@@ -235,7 +233,7 @@ new Vue({
         .finally(() => this.refresh().catch(console.error));
     },
     updateClientDns(client, dns) {
-      this.api.updateClientDns({ clientId: client.id, dns })
+      this.api.updateClientAddress({ clientId: client.id, dns })
         .catch((err) => alert(err.message || err.toString()))
         .finally(() => this.refresh().catch(console.error));
     },
