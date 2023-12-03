@@ -7,7 +7,7 @@ services:
     environment:
       # ⚠️ Required:
       # Change this to your host's public address
-      - WG_HOST=nbg-dc.securefast.app
+      - WG_HOST=23.88.96.142
 
       # Optional:
       # - PASSWORD=foobar123

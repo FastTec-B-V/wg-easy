@@ -98,13 +98,14 @@ module.exports = class Server {
       }))
       .get('/api/wireguard/client/:clientId/configuration', Util.promisify(async (req, res) => {
         const { clientId } = req.params;
+        const client = await WireGuard.getClient({ clientId });
         const config = await WireGuard.getClientConfiguration({ clientId });
-        const configName = clientId;
-        res.header('Content-Disposition', `attachment; filename="${configName}.conf"`);
+        const configName = client.name
+          .substring(0, 32);
+        res.header('Content-Disposition', `attachment; filename="${configName || clientId}.conf"`);
         res.header('Content-Type', 'text/plain');
         res.send(config);
       }))
-
       .post('/api/wireguard/client/', Util.promisify(async (req) => {
         const { clientId } = req.body;
         return WireGuard.createClient({ clientId });
