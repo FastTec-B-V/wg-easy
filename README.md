@@ -106,7 +106,7 @@ To update to the latest version, simply run:
 ```bash
 docker stop wg-easy
 docker rm wg-easy
-docker pull peterlewis/wg-easy
+docker pull cakr4/wg-easy
 ```
 
 And then run the `docker run -d \ ...` command above again.
