@@ -94,7 +94,7 @@ module.exports = class WireGuard {
 # Server
 [Interface]
 PrivateKey = ${config.server.privateKey}
-Address = ${config.server.address}/24
+Address = ${config.server.address}/32
 ListenPort = 51820
 PreUp = ${WG_PRE_UP}
 PostUp = ${WG_POST_UP}
@@ -200,7 +200,7 @@ AllowedIPs = ${client.address}/32`;
 [Interface]
 PrivateKey = ${client.privateKey}
 Address = ${client.address}/32
-${WG_DEFAULT_DNS ? `DNS = ${WG_DEFAULT_DNS}` : `DNS = ${client.dns}`}
+DNS = ${client.dns}
 ${WG_MTU ? `MTU = ${WG_MTU}` : ''}
 
 [Peer]
@@ -230,7 +230,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     const privateKey = await Util.exec('wg genkey');
     const publicKey = await Util.exec(`echo ${privateKey} | wg pubkey`);
     const preSharedKey = await Util.exec('wg genpsk');
-
+    const dns = await WG_DEFAULT_DNS;
     // Calculate next IP
     let address;
     for (let i = 2; i < 255; i++) {
@@ -240,6 +240,10 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
 
       if (!client) {
         address = WG_DEFAULT_ADDRESS.replace('x', i);
+        break;
+      }
+      if (!client) {
+        dns = WG_DEFAULT_DNS;
         break;
       }
     }
@@ -252,6 +256,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     const client = {
       clientId,
       address,
+      dns,
       privateKey,
       publicKey,
       preSharedKey,
