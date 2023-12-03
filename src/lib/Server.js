@@ -100,15 +100,12 @@ module.exports = class Server {
         const { clientId } = req.params;
         const client = await WireGuard.getClient({ clientId });
         const config = await WireGuard.getClientConfiguration({ clientId });
-        const configName = client
-          .replace(/[^a-zA-Z0-9_=+.-]/g, '-')
-          .replace(/(-{2,}|-$)/g, '-')
-          .replace(/-$/, '')
-          .substring(0, 32);
+        const configName = client;
         res.header('Content-Disposition', `attachment; filename="${configName}.conf"`);
         res.header('Content-Type', 'text/plain');
         res.send(config);
       }))
+
       .post('/api/wireguard/client/', Util.promisify(async (req) => {
         const { clientId } = req.body;
         return WireGuard.createClient({ clientId });
