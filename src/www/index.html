@@ -149,7 +149,7 @@
                       :ref="'client-' + client.id + '-name'"
                       class="rounded px-1 border-2 border-gray-100 focus:border-gray-200 outline-none w-30" />
                     <span v-show="clientEditNameId !== client.id" style="max-width: 28ch;"
-                      class="inline-block border-t-2 border-b-2 border-transparent align-top sm:w-auto overflow-hidden sm:overflow-visible overflow-ellipsis">{{client.name}}</span>
+                      class="inline-block border-t-2 border-b-2 border-transparent align-top sm:w-auto overflow-hidden sm:overflow-visible overflow-ellipsis">{{client.id}}</span>
 
                     <!-- Edit -->
                     <span v-show="clientEditNameId !== client.id"
@@ -511,8 +511,8 @@
     </div>
 
     <p v-cloak class="text-center m-10 text-gray-300 text-xs">Made by <a target="_blank" class="hover:underline"
-        href="https://emilenijssen.nl/?ref=wg-easy">Emile Nijssen</a> · Fork by <a target="_blank" class="hover:underline"
-        href="https://peterlew.is">Peter Lewis</a> · <a class="hover:underline"
+        href="https://emilenijssen.nl/?ref=wg-easy">Emile Nijssen</a> · Fork by <a target="_blank"
+        class="hover:underline" href="https://peterlew.is">Peter Lewis</a> · <a class="hover:underline"
         href="https://github.com/sponsors/WeeJeWel" target="_blank">Donate to Emile</a> · <a class="hover:underline"
         href="https://github.com/peterlewis/wg-easy" target="_blank">GitHub</a></p>
 
