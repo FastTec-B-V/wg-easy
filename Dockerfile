@@ -32,7 +32,7 @@ RUN apk add -U --no-cache \
 
 # Expose Ports
 EXPOSE 51820/udp
-EXPOSE 51821/tcp
+EXPOSE 8443/tcp
 
 # Set Environment
 ENV DEBUG=Server,WireGuard
