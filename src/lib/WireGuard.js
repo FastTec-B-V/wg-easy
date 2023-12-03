@@ -220,33 +220,10 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     });
   }
 
-  async checkclientIdExists(clientId) {
-    // Assume there is a function or database query to check if the name exists
-    const clientIdxists = clientId;
 
-    if (clientIdxists) {
-      const error = new Error('clientId already exists');
-      error.code = 'NAME_EXISTS';
-      throw error;
-    }
-
-    // Code to handle the case where the name does not exist
-    console.log('clientId does not exist:', clientId);
-  }
   async createClient({ clientId }) {
-
-    try {
-      checkclientIdExists(clientId);
-    } catch (error) {
-      if (error.code === 'NAME_EXISTS') {
-        console.error('Error:', error.message);
-        // Handle the error specific to the name already existing
-        // You can also send an appropriate HTTP response code if this is in a server context
-        // For example, response.status(409).send('Conflict: Name already exists');
-      } else {
-        // Handle other types of errors
-        throw new Error('Missing: Client ID');
-      }
+    if (!clientId) {
+      throw new Error('Missing: Client ID');
     }
 
     const config = await this.getConfig();
