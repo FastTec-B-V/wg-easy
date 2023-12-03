@@ -3,7 +3,7 @@
 const { release } = require('./package.json');
 
 module.exports.RELEASE = release;
-module.exports.PORT = process.env.PORT || 8443;
+module.exports.PORT = process.env.PORT || 8880;
 module.exports.WEBUI_HOST = process.env.WEBUI_HOST || '0.0.0.0';
 module.exports.PASSWORD = process.env.PASSWORD;
 module.exports.WG_PATH = process.env.WG_PATH || '/etc/wireguard/';
