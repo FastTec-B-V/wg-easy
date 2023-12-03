@@ -100,7 +100,7 @@ module.exports = class Server {
         const { clientId } = req.params;
         const client = await WireGuard.getClient({ clientId });
         const config = await WireGuard.getClientConfiguration({ clientId });
-        const configName = client.id
+        const configName = client
           .replace(/[^a-zA-Z0-9_=+.-]/g, '-')
           .replace(/(-{2,}|-$)/g, '-')
           .replace(/-$/, '')
