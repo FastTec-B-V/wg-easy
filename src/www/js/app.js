@@ -128,6 +128,9 @@ new Vue({
 
       const clients = await this.api.getClients();
       this.clients = clients.map((client) => {
+        if (client.clientId.includes('@') && client.clientId.includes('.')) {
+          client.avatar = `https://www.gravatar.com/avatar/${md5(client.clientId)}?d=blank`;
+        }
 
         if (!this.clientsPersist[client.id]) {
           this.clientsPersist[client.id] = {};
@@ -203,11 +206,8 @@ new Vue({
           alert(err.message || err.toString());
         });
     },
-    createClient() {
-      const name = this.clientCreateName;
-      if (!name) return;
-
-      this.api.createClient({ name })
+    createClient(client) {
+      this.api.createClient({ clientId: client.id })
         .catch((err) => alert(err.message || err.toString()))
         .finally(() => this.refresh().catch(console.error));
     },

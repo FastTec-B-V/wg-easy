@@ -182,11 +182,11 @@ AllowedIPs = ${client.address}/32`;
     return clients;
   }
 
-  async getClient({ name }) {
+  async getClient({ clientId }) {
     const config = await this.getConfig();
-    const client = config.clients[name];
+    const client = config.clients[clientId];
     if (!client) {
-      throw new ServerError(`Client Not Found: ${name}`, 404);
+      throw new ServerError(`Client Not Found: ${clientId}`, 404);
     }
 
     return client;
@@ -219,56 +219,57 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     });
   }
 
-  async createClient({ name, clientId }) {
+
+  async createClient({ clientId }) {
     if (!clientId) {
       throw new Error('Missing: Client ID');
     }
-  
+
     const config = await this.getConfig();
-  
+
     const privateKey = await Util.exec('wg genkey');
     const publicKey = await Util.exec(`echo ${privateKey} | wg pubkey`);
     const preSharedKey = await Util.exec('wg genpsk');
-  
+
     // Calculate next IP
     let address;
     for (let i = 2; i < 255; i++) {
       const client = Object.values(config.clients).find((client) => {
         return client.address === WG_DEFAULT_ADDRESS.replace('x', i);
       });
-  
+
       if (!client) {
         address = WG_DEFAULT_ADDRESS.replace('x', i);
         break;
       }
     }
-  
+
     if (!address) {
       throw new Error('Maximum number of clients reached.');
     }
-  
+
     // Create Client
     const client = {
       clientId,
-      name, 
+      name,
       address,
       privateKey,
       publicKey,
       preSharedKey,
-  
+
       createdAt: new Date(),
       updatedAt: new Date(),
-  
+
       enabled: true,
     };
-  
+
     config.clients[clientId] = client;  // Change from 'name' to 'clientId'
-  
+
     await this.saveConfig();
-  
+
     return client;
   }
-  
+
 
   async deleteClient({ clientId }) {
     const config = await this.getConfig();
