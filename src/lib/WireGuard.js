@@ -46,12 +46,13 @@ module.exports = class WireGuard {
             log: 'echo ***hidden*** | wg pubkey',
           });
           const address = WG_DEFAULT_ADDRESS.replace('x', '1');
-
+          const dns = WG_DEFAULT_DNS;
           config = {
             server: {
               privateKey,
               publicKey,
               address,
+              dns
             },
             clients: {},
           };
@@ -242,10 +243,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
         address = WG_DEFAULT_ADDRESS.replace('x', i);
         break;
       }
-      if (!client) {
-        dns = WG_DEFAULT_DNS;
-        break;
-      }
+      
     }
 
     if (!address) {
