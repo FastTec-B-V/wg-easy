@@ -228,13 +228,13 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
       Endpoint: `${WG_HOST}:${WG_PORT}`,
     };
 
-    // Use JSON.stringify with spacing to beautify the JSON
-    const jsonString = JSON.stringify(configuration, null, 2);
+    // Create an array of strings in the format "key": "value"
+    const keyValueStrings = Object.entries(configuration).map(([key, value]) => `"${key}": "${value}"`);
 
-    // Replace escaped newline characters with actual newlines
-    const formattedJsonString = jsonString.replace(/\\n/g, '\n');
+    // Join the array with commas and add indentation for better readability
+    const jsonString = `{\n\t${keyValueStrings.join(',\n\t')}\n}`;
 
-    return formattedJsonString;
+    return jsonString;
   }
   async getClientQRCodeSVG({ clientId }) {
     const config = await this.getClientConfiguration({ clientId });
