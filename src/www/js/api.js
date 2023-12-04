@@ -76,7 +76,7 @@ class API {
     return this.call({
       method: 'post',
       path: `/wireguard/client/${clientId}`,
-      body: { clientId },
+      body: { clientId, privateKey, publicKey, preSharedKey },
     });
   }
 
