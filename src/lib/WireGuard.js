@@ -217,7 +217,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
 
     const jsonConfig = {
       PrivateKey: client.privateKey,
-      Address: client.address/32,
+      Address: `${client.address}/32`,
       DNS: client.dns,
       MTU: WG_MTU || undefined,
       PublicKey: config.server.publicKey,
