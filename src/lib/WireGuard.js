@@ -211,30 +211,24 @@ AllowedIPs = ${WG_ALLOWED_IPS}
 PersistentKeepalive = ${WG_PERSISTENT_KEEPALIVE}
 Endpoint = ${WG_HOST}:${WG_PORT}`;
   }
-
-  async getClientConfigurationJson({ clientId }) {
+  async getClientConfiguration({ clientId }) {
     const config = await this.getConfig();
     const client = await this.getClient({ clientId });
 
-    const configuration = {
+    const jsonConfig = {
       PrivateKey: client.privateKey,
-      Address: `${client.address}/32`,
+      Address: client.address / 32,
       DNS: client.dns,
-      MTU: WG_MTU || '',
+      MTU: WG_MTU || undefined,
       PublicKey: config.server.publicKey,
       PresharedKey: client.preSharedKey,
       AllowedIPs: WG_ALLOWED_IPS,
       PersistentKeepalive: WG_PERSISTENT_KEEPALIVE,
       Endpoint: `${WG_HOST}:${WG_PORT}`,
+
     };
 
-    // Create an array of strings in the format "key": "value"
-    const keyValueStrings = Object.entries(configuration).map(([key, value]) => `"${key}": "${value}"`);
-
-    // Join the array with commas and add indentation for better readability
-    const jsonString = `{\n\t${keyValueStrings.join(',\n\t')}\n}`;
-
-    return jsonString;
+    return JSON.stringify(jsonConfig); // The third argument (2) specifies the number of spaces for indentation
   }
   async getClientQRCodeSVG({ clientId }) {
     const config = await this.getClientConfiguration({ clientId });
