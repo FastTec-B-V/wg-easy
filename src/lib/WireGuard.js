@@ -216,24 +216,19 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     const client = await this.getClient({ clientId });
 
     const jsonConfig = {
-      "PrivateKey": client.privateKey,
-      "Address": client.address / 32,
-      "DNS": client.dns,
-      "MTU": WG_MTU || undefined,
-      "PublicKey": config.server.publicKey,
-      "PresharedKey": client.preSharedKey,
-      "AllowedIPs": WG_ALLOWED_IPS,
-      "PersistentKeepalive": WG_PERSISTENT_KEEPALIVE,
-      "Endpoint": `${WG_HOST}:${WG_PORT}`,
-    };
-    const jsonString = jsonConfig.slice(1, -1);
-    const replacedString = jsonString
-      .replace(/\\n/g, '\n')
-      .replace(/\\\"/g, '');
+      PrivateKey: client.privateKey,
+      Address: client.address/32,
+      DNS: client.dns,
+      MTU: WG_MTU || undefined,
+      PublicKey: config.server.publicKey,
+      PresharedKey: client.preSharedKey,
+      AllowedIPs: WG_ALLOWED_IPS,
+      PersistentKeepalive: WG_PERSISTENT_KEEPALIVE,
+      Endpoint: `${WG_HOST}:${WG_PORT}`,
 
-    const jsonObject = JSON.parse(replacedString);
-    const beautyJsonString = JSON.stringify(jsonObject, null, 2);
-    return JSON.stringify(beautyJsonString, null, 2); // The third argument (2) specifies the number of spaces for indentation
+    };
+
+    return JSON.stringify(jsonConfig, null, 2); // The third argument (2) specifies the number of spaces for indentation
   }
   async getClientQRCodeSVG({ clientId }) {
     const config = await this.getClientConfiguration({ clientId });
