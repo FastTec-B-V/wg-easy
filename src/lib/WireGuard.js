@@ -228,7 +228,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
 
     };
 
-    return JSON.stringify(jsonConfig); // The third argument (2) specifies the number of spaces for indentation
+    return JSON.stringify(jsonConfig, null, 2); // The third argument (2) specifies the number of spaces for indentation
   }
   async getClientQRCodeSVG({ clientId }) {
     const config = await this.getClientConfiguration({ clientId });
