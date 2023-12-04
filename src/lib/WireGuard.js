@@ -211,7 +211,7 @@ AllowedIPs = ${WG_ALLOWED_IPS}
 PersistentKeepalive = ${WG_PERSISTENT_KEEPALIVE}
 Endpoint = ${WG_HOST}:${WG_PORT}`;
   }
-  async getClientConfiguration({ clientId }) {
+  async getClientConfigurationJson({ clientId }) {
     const config = await this.getConfig();
     const client = await this.getClient({ clientId });
 
