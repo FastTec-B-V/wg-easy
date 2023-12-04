@@ -217,19 +217,16 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     const client = await this.getClient({ clientId });
 
     const jsonConfig = {
-      Interface: {
-        PrivateKey: client.privateKey,
-        Address: `${client.address}/32`,
-        DNS: client.dns,
-        MTU: WG_MTU || undefined,
-      },
-      Peer: {
-        PublicKey: config.server.publicKey,
-        PresharedKey: client.preSharedKey,
-        AllowedIPs: WG_ALLOWED_IPS,
-        PersistentKeepalive: WG_PERSISTENT_KEEPALIVE,
-        Endpoint: `${WG_HOST}:${WG_PORT}`,
-      },
+        "PrivateKey": client.privateKey,
+        "Address": `${client.address}/32`,
+        "DNS": client.dns,
+        "MTU": WG_MTU || undefined,
+        "PublicKey": config.server.publicKey,
+        "PresharedKey": client.preSharedKey,
+        "AllowedIPs": WG_ALLOWED_IPS,
+        "PersistentKeepalive": WG_PERSISTENT_KEEPALIVE,
+        "Endpoint": `${WG_HOST}:${WG_PORT}`,
+      
     };
 
     return JSON.stringify(jsonConfig, null, 2); // The third argument (2) specifies the number of spaces for indentation
