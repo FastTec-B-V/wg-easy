@@ -107,7 +107,8 @@ module.exports = class Server {
         try {
           const configuration = await WireGuard.getClientConfigurationJson({ clientId });
           res.header('Content-Type', 'application/json');
-          res.json({ configuration });
+          const prettyConfig = JSON.stringify(JSON.parse(configuration), null, 2);
+          res.json({ configuration: prettyConfig });
         } catch (error) {
           res.status(500).json({ error: 'Internal Server Error' });
         }
