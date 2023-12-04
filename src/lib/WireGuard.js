@@ -226,7 +226,14 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
       "PersistentKeepalive": WG_PERSISTENT_KEEPALIVE,
       "Endpoint": `${WG_HOST}:${WG_PORT}`,
     };
-    return JSON.stringify(jsonConfig, null, 2); // The third argument (2) specifies the number of spaces for indentation
+    const jsonString = jsonConfig.slice(1, -1);
+    const replacedString = jsonString
+      .replace(/\\n/g, '\n')
+      .replace(/\\\"/g, '');
+
+    const jsonObject = JSON.parse(replacedString);
+    const beautyJsonString = JSON.stringify(jsonObject, null, 2);
+    return JSON.stringify(beautyJsonString, null, 2); // The third argument (2) specifies the number of spaces for indentation
   }
   async getClientQRCodeSVG({ clientId }) {
     const config = await this.getClientConfiguration({ clientId });

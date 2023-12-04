@@ -106,8 +106,7 @@ module.exports = class Server {
         const { clientId } = req.params;
         const configuration = await WireGuard.getClientConfigurationJson({ clientId });
         res.header('Content-Type', 'application/json');
-        const prettyConfig = JSON.stringify(configuration, null, 2);
-        res.json(prettyConfig);
+        res.json(configuration);
       })
       .post('/api/wireguard/client/', Util.promisify(async (req) => {
         const { clientId } = req.body;
