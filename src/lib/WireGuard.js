@@ -221,16 +221,16 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
   }
 
 
-  async createClient({ clientId, privateKey, publicKey, preSharedKey }) {
+  async createClient({ clientId, ownPrivateKey, ownPublicKey, ownPreSharedKey }) {
     if (!clientId) {
       throw new Error('Missing: Client ID');
     }
 
     const config = await this.getConfig();
 
-    const privateKey = privateKey;
-    const publicKey = publicKey;
-    const preSharedKey = preSharedKey;
+    const privateKey = ownPrivateKey;
+    const publicKey = ownPublicKey;
+    const preSharedKey = ownPreSharedKey;
     const dns = await WG_DEFAULT_DNS;
     // Calculate next IP
     let address;
