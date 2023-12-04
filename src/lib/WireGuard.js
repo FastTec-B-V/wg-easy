@@ -216,20 +216,25 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     const config = await this.getConfig();
     const client = await this.getClient({ clientId });
 
-    const jsonConfig = {
-      'PrivateKey': `${client.privateKey}`,
-      'Address': `${client.address}/32`,
-      'DNS': `${client.dns}`,
-      'MTU': `${WG_MTU}` || undefined,
-      'PublicKey': `${config.server.publicKey}`,
-      'PresharedKey': `${client.preSharedKey}`,
-      'AllowedIPs': `${WG_ALLOWED_IPS}`,
-      'PersistentKeepalive': `${WG_PERSISTENT_KEEPALIVE}`,
-      'Endpoint': `${WG_HOST}:${WG_PORT}`,
-
+    const configuration = {
+      PrivateKey: client.privateKey,
+      Address: `${client.address}/32`,
+      DNS: client.dns,
+      MTU: WG_MTU || '',
+      PublicKey: config.server.publicKey,
+      PresharedKey: client.preSharedKey,
+      AllowedIPs: WG_ALLOWED_IPS,
+      PersistentKeepalive: WG_PERSISTENT_KEEPALIVE,
+      Endpoint: `${WG_HOST}:${WG_PORT}`,
     };
 
-    return JSON.stringify(jsonConfig, null, 2); // The third argument (2) specifies the number of spaces for indentation
+    // Use JSON.stringify with spacing to beautify the JSON
+    const jsonString = JSON.stringify(configuration, null, 2);
+
+    // Replace escaped newline characters with actual newlines
+    const formattedJsonString = jsonString.replace(/\\n/g, '\n');
+
+    return formattedJsonString;
   }
   async getClientQRCodeSVG({ clientId }) {
     const config = await this.getClientConfiguration({ clientId });
