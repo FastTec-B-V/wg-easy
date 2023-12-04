@@ -99,10 +99,18 @@ module.exports = class Server {
       .get('/api/wireguard/client/:clientId/configuration', Util.promisify(async (req, res) => {
         const { clientId } = req.params;
         const config = await WireGuard.getClientConfiguration({ clientId });
-        const configName = clientId
         res.header('Content-Type', 'text/plain');
         res.send(config);
       }))
+      .get('/api/wireguard/client/:clientId/configuration/json', async (req, res) => {
+        const { clientId } = req.params;
+        try {
+          const configuration = await WireGuard.getClientConfigurationJson({ clientId });
+          res.json({ configuration });
+        } catch (error) {
+          res.status(500).json({ error: 'Internal Server Error' });
+        }
+      })
       .post('/api/wireguard/client/', Util.promisify(async (req) => {
         const { clientId } = req.body;
         return WireGuard.createClient({ clientId });
