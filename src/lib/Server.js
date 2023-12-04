@@ -104,14 +104,10 @@ module.exports = class Server {
       }))
       .get('/api/wireguard/client/:clientId/json', async (req, res) => {
         const { clientId } = req.params;
-        try {
-          const configuration = await WireGuard.getClientConfigurationJson({ clientId });
-          res.header('Content-Type', 'application/json');
-          const prettyConfig = JSON.stringify(JSON.parse(configuration), null, 2);
-          res.json({ configuration: prettyConfig });
-        } catch (error) {
-          res.status(500).json({ error: 'Internal Server Error' });
-        }
+        const configuration = await WireGuard.getClientConfigurationJson({ clientId });
+        res.header('Content-Type', 'application/json');
+        const prettyConfig = JSON.stringify(configuration, null, 2);
+        res.json(prettyConfig);
       })
       .post('/api/wireguard/client/', Util.promisify(async (req) => {
         const { clientId } = req.body;
