@@ -104,8 +104,8 @@ module.exports = class Server {
         res.send(config);
       }))
       .post('/api/wireguard/client/', Util.promisify(async (req) => {
-        const { clientId, ownPrivateKey, ownPublicKey, ownPreSharedKey } = req.body;
-        return WireGuard.createClient({ clientId, ownPrivateKey, ownPublicKey, ownPreSharedKey });
+        const { clientId } = req.body;
+        return WireGuard.createClient({ clientId });
       }))
 
       .delete('/api/wireguard/client/:clientId', Util.promisify(async (req) => {
