@@ -96,16 +96,17 @@ module.exports = class Server {
         res.header('Content-Type', 'image/svg+xml');
         res.send(svg);
       }))
-      .get('/api/wireguard/client/:clientId/configuration', Util.promisify(async (req, res) => {
+      .get('/api/wireguard/client/:clientId/text', Util.promisify(async (req, res) => {
         const { clientId } = req.params;
         const config = await WireGuard.getClientConfiguration({ clientId });
         res.header('Content-Type', 'text/plain');
         res.send(config);
       }))
-      .get('/api/wireguard/client/:clientId/configuration/json', async (req, res) => {
+      .get('/api/wireguard/client/:clientId/json', async (req, res) => {
         const { clientId } = req.params;
         try {
           const configuration = await WireGuard.getClientConfigurationJson({ clientId });
+          res.header('Content-Type', 'application/json');
           res.json({ configuration });
         } catch (error) {
           res.status(500).json({ error: 'Internal Server Error' });
