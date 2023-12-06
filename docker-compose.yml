@@ -7,7 +7,7 @@ services:
     environment:
       # ⚠️ Required:
       # Change this to your host's public address
-      - WG_HOST=23.88.96.142
+      - WG_HOST=
 
       # Optional:
       # - PASSWORD=foobar123
@@ -45,4 +45,4 @@ services:
     restart: unless-stopped
     command: tunnel --no-autoupdate run
     environment:
-      - TUNNEL_TOKEN=eyJhIjoiYmRmNTBiNDJhNTljMWU5Y2U3ODllNjJhMzYyYWU5OTIiLCJ0IjoiZjlhZWU2MjMtNDI0Ni00YWUyLWJkMDAtNGJjZThhMzhmZmMyIiwicyI6Ik9UZ3pNekJtWlRVdE9UWmpaQzAwTTJGaExXSTVabVV0TW1Jd05HSXpaVFV3T0RWaCJ9
+      - TUNNEL_TOKEN=
