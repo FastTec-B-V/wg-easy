@@ -243,7 +243,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     if (!clientId) {
       throw new Error('Missing: Client ID');
     }
-    const MAX_CLIENTS = 255;
+    const MAX_CLIENTS = 5;
     const MAX_DAYS_OLD = 3;
 
     const currentDate = new Date();
@@ -279,7 +279,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
       }
     }
 
-   
+
     // for (let i = 2; i < 255; i++) {
     //   const client = Object.values(config.clients).find((client) => {
     //     return client.address === WG_DEFAULT_ADDRESS.replace('x', i);
