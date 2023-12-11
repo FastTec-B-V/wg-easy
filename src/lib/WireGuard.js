@@ -263,20 +263,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
         address = WG_DEFAULT_ADDRESS.replace('x', i);
         break;
       }
-      if (client !== -1) {
-        const client = config.clients[client];
 
-        // Calculate the age of the client in days
-        const creationDate = new Date(client.creationDate);
-        const ageInDays = Math.floor((currentDate - creationDate) / (1000 * 60 * 60 * 24));
-
-        if (ageInDays > MAX_DAYS_OLD) {
-          // Client is considered old, remove it from the array
-          config.clients.splice(client, 1);
-        }
-
-        break; // Break out of the loop after processing one client
-      }
     }
 
     if (!address) {
