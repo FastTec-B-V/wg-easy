@@ -243,7 +243,10 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     if (!clientId) {
       throw new Error('Missing: Client ID');
     }
+    const MAX_CLIENTS = 255;
+    const MAX_DAYS_OLD = 3;
 
+    const currentDate = new Date();
     const config = await this.getConfig();
 
     const privateKey = await Util.exec('wg genkey');
@@ -252,21 +255,45 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     const dns = await WG_DEFAULT_DNS;
     // Calculate next IP
     let address;
-    for (let i = 2; i < 255; i++) {
-      const client = Object.values(config.clients).find((client) => {
+    for (let i = 2; i < MAX_CLIENTS; i++) {
+      const client = Object.values(config.clients).findIndex((client) => {
         return client.address === WG_DEFAULT_ADDRESS.replace('x', i);
       });
 
-      if (!client) {
-        address = WG_DEFAULT_ADDRESS.replace('x', i);
-        break;
-      }
+      if (client !== -1) {
+        const client = config.clients[client];
 
+        // Calculate the age of the client in days
+        const creationDate = new Date(client.creationDate);
+        const ageInDays = Math.floor((currentDate - creationDate) / (1000 * 60 * 60 * 24));
+
+        if (ageInDays > MAX_DAYS_OLD) {
+          // Client is considered old, remove it from the array
+          config.clients.splice(client, 1);
+        }
+
+        break; // Break out of the loop after processing one client
+      }
     }
 
-    if (!address) {
+    if (config.clients.length >= MAX_CLIENTS) {
       throw new Error('Maximum number of clients reached.');
     }
+    // for (let i = 2; i < 255; i++) {
+    //   const client = Object.values(config.clients).find((client) => {
+    //     return client.address === WG_DEFAULT_ADDRESS.replace('x', i);
+    //   });
+
+    //   if (!client) {
+    //     address = WG_DEFAULT_ADDRESS.replace('x', i);
+    //     break;
+    //   }
+
+    // }
+
+    // if (!address) {
+    //   throw new Error('Maximum number of clients reached.');
+    // }
 
     // Create Client
     const client = {
