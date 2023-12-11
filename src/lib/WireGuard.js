@@ -259,8 +259,11 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
       const client = Object.values(config.clients).findIndex((client) => {
         return client.address === WG_DEFAULT_ADDRESS.replace('x', i);
       });
-
-      if (client !== -1) {
+      if (!client) {
+        address = WG_DEFAULT_ADDRESS.replace('x', i);
+        break;
+      }
+      if (!address) {
         const client = config.clients[client];
 
         // Calculate the age of the client in days
@@ -276,9 +279,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
       }
     }
 
-    if (config.clients.length >= MAX_CLIENTS) {
-      throw new Error('Maximum number of clients reached.');
-    }
+   
     // for (let i = 2; i < 255; i++) {
     //   const client = Object.values(config.clients).find((client) => {
     //     return client.address === WG_DEFAULT_ADDRESS.replace('x', i);
