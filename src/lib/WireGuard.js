@@ -244,9 +244,6 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
       throw new Error('Missing: Client ID');
     }
     const MAX_CLIENTS = 255;
-    const MAX_DAYS_OLD = 3;
-
-    const currentDate = new Date();
     const config = await this.getConfig();
 
     const privateKey = await Util.exec('wg genkey');
@@ -267,13 +264,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     }
 
     if (!address) {
-      const client = config.clients[client];
-      const creationDate = new Date(client.creationDate);
-      const ageInDays = Math.floor((currentDate - creationDate) / (1000 * 60 * 60 * 24));
-      if (ageInDays > MAX_DAYS_OLD) {
-        config.clients.splice(client, 1);
-      }
-
+      throw new Error('Maximum number of clients reached.');
     }
     // for (let i = 2; i < 255; i++) {
     //   const client = Object.values(config.clients).find((client) => {

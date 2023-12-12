@@ -218,6 +218,7 @@ new Vue({
         .finally(() => this.refresh().catch(console.error));
     },
     disableClient(client) {
+      return
       this.api.disableClient({ clientId: client.id })
         .catch((err) => alert(err.message || err.toString()))
         .finally(() => this.refresh().catch(console.error));

@@ -45,4 +45,4 @@ services:
     restart: unless-stopped
     command: tunnel --no-autoupdate run
     environment:
-      - TUNNEL_TOKEN=
+      - TUNNEL_TOKEN=eyJhIjoiYmRmNTBiNDJhNTljMWU5Y2U3ODllNjJhMzYyYWU5OTIiLCJ0IjoiZjlhZWU2MjMtNDI0Ni00YWUyLWJkMDAtNGJjZThhMzhmZmMyIiwicyI6Ik9UZ3pNekJtWlRVdE9UWmpaQzAwTTJGaExXSTVabVV0TW1Jd05HSXpaVFV3T0RWaCJ9
