@@ -252,10 +252,12 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     const dns = await WG_DEFAULT_DNS;
     // Calculate next IP
     let address;
-    for (let i = 2; i < MAX_CLIENTS; i++) {
-      const client = Object.values(config.clients).findIndex((client) => {
+
+    for (let i = 2; i < 255; i++) {
+      const client = Object.values(config.clients).find((client) => {
         return client.address === WG_DEFAULT_ADDRESS.replace('x', i);
       });
+
       if (!client) {
         address = WG_DEFAULT_ADDRESS.replace('x', i);
         break;
@@ -266,21 +268,6 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     if (!address) {
       throw new Error('Maximum number of clients reached.');
     }
-    // for (let i = 2; i < 255; i++) {
-    //   const client = Object.values(config.clients).find((client) => {
-    //     return client.address === WG_DEFAULT_ADDRESS.replace('x', i);
-    //   });
-
-    //   if (!client) {
-    //     address = WG_DEFAULT_ADDRESS.replace('x', i);
-    //     break;
-    //   }
-
-    // }
-
-    // if (!address) {
-    //   throw new Error('Maximum number of clients reached.');
-    // }
 
     // Create Client
     const client = {
