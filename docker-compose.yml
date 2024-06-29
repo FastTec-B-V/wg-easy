@@ -42,9 +42,20 @@ services:
    # ports:
    #   - "51821:51821"
 
-  cf-tunnel:
-    image: cloudflare/cloudflared:latest
-    restart: unless-stopped
-    command: tunnel --no-autoupdate run 
-    environment:
-      - TUNNEL_TOKEN=eyJhIjoiNjRlYWFkZDcyODdlYjVlMzEwMWU5ZTJlNDNhNmQxZTciLCJ0IjoiOTUyOGJjYjktOTNlNi00M2NhLTk2MDgtMzJkNTllNmE2MzIwIiwicyI6IlpHRXlZall6TkRFdE9XTmpaaTAwWVRJNExUZ3pObVF0TlRSa09HWTFOVGRtWWpNNSJ9
+  #cf-tunnel:
+    #image: cloudflare/cloudflared:latest
+    #restart: unless-stopped
+    #command: tunnel --no-autoupdate run 
+    #environment:
+      #- TUNNEL_TOKEN=eyJhIjoiNjRlYWFkZDcyODdlYjVlMzEwMWU5ZTJlNDNhNmQxZTciLCJ0IjoiOTUyOGJjYjktOTNlNi00M2NhLTk2MDgtMzJkNTllNmE2MzIwIiwicyI6IlpHRXlZall6TkRFdE9XTmpaaTAwWVRJNExUZ3pObVF0TlRSa09HWTFOVGRtWWpNNSJ9
+
+  #cloudflared:
+   #image: cloudflare/cloudflared:latest
+   #container_name: wg_cloudflared
+   #restart: always
+   #command: "tunnel --no-autoupdate run --token eyJhIjoiNjRlYWFkZDcyODdlYjVlMzEwMWU5ZTJlNDNhNmQxZTciLCJ0IjoiOTUyOGJjYjktOTNlNi00M2NhLTk2MDgtMzJkNTllNmE2MzIwIiwicyI6IlpHRXlZall6TkRFdE9XTmpaaTAwWVRJNExUZ3pObVF0TlRSa09HWTFOVGRtWWpNNSJ9"
+   # the token is created with ZeroTrust > Tunnels and specific to this subdomain
+   #volumes:
+   #  - ./cloudflared:/etc/cloudflared
+   #depends_on:
+   #  - wgeasy 
