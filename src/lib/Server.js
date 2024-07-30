@@ -93,8 +93,9 @@ module.exports = class Server {
       .get('/api/wireguard/clientspeed/:clientId/text', Util.promisify(async (req,res) => {
         const { clientId } = req.params;
         const client = WireGuard.getClient(clientId);
+        const config = await WireGuard.getClientConfiguration({ clientId });
         res.header('Content-Type', 'text/plain');
-        res.send(client.transferRx+","+client.transferTx);
+        res.send(config);
         //return client.transferRx+","+client.transferTx;
       }))
       .get('/api/wireguard/client/:clientId/qrcode.svg', Util.promisify(async (req, res) => {
