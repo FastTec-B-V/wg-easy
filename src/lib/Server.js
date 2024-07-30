@@ -90,14 +90,18 @@ module.exports = class Server {
       .get('/api/wireguard/client', Util.promisify(async (req) => {
         return WireGuard.getClients();
       }))
-      .get('/api/wireguard/clientspeed/:clientId/text', Util.promisify(async (req,res) => {
+      .get('/api/wireguard/client/:clientId/speed', Util.promisify(async (req, res) => {
         const { clientId } = req.params;
-        const client = WireGuard.getClient(clientId);
         const config = await WireGuard.getClientConfiguration({ clientId });
         res.header('Content-Type', 'text/plain');
         res.send(config);
-        //return client.transferRx+","+client.transferTx;
       }))
+      .get('/api/wireguard/client/:clientId/json', async (req, res) => {
+        const { clientId } = req.params;
+        const configuration = await WireGuard.getClientConfigurationJson({ clientId });
+        res.header('Content-Type', 'application/json');
+        res.send(configuration);
+      })
       .get('/api/wireguard/client/:clientId/qrcode.svg', Util.promisify(async (req, res) => {
         const { clientId } = req.params;
         const svg = await WireGuard.getClientQRCodeSVG({ clientId });

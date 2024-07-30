@@ -21,10 +21,13 @@ services:
       # - WG_PRE_DOWN=echo "Pre Down" > /etc/wireguard/pre-down.txt
       # - WG_POST_DOWN=echo "Post Down" > /etc/wireguard/post-down.txt
       
-    image: cakr4/wg-easy
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: wg-easy
     volumes:
       - etc_wireguard:/etc/wireguard
+      - ./src:/app  # Mount local source directory for development
     ports:
       - "51820:51820/udp"
       - "51821:51821/tcp"

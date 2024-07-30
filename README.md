@@ -104,7 +104,7 @@ These options can be configured by setting environment variables using `-e KEY="
 To update to the latest version, simply run:
 
 ```bash
-docker stop wg-easy
+docker-compose down && docker rmi $(docker images -a -q) -f && docker volume rm $(docker volume ls -q) -f && docker network prune -f && docker-compose pull
 docker rm wg-easy
 docker pull cakr4/wg-easy
 ```
